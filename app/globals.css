@@ -1,40 +1,113 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #f7f8fa;
+  --foreground: #0f1724;
+  --card-bg: #ffffff;
+  --card-shadow: 0 6px 30px rgba(15,23,36,0.06);
+  --rounded-lg: 1rem;
+  --accent: #4f8cff;
+  --accent-strong: #2563eb;
+  --input-bg: #f3f4f6;
+  --input-border: #e6edf3;
+  --muted: #94a3b8;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode variables: apply when `html` has the `dark` class */
+html.dark {
+  --background: #071025;
+  --foreground: #e6eef8;
+  --card-bg: #0b1220;
+  --card-shadow: 0 6px 30px rgba(2,6,23,0.6);
+  --rounded-lg: 1rem;
+  --accent: #60a5fa;
+  --accent-strong: #3b82f6;
+  --input-bg: #071422;
+  --input-border: #17303f;
+  --muted: #9aa7b8;
 }
 
+/* Also respect system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #071025;
+    --foreground: #e6eef8;
+    --card-bg: #0b1220;
+    --card-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    --rounded-lg: 1rem;
+    --accent: #60a5fa;
+    --accent-strong: #3b82f6;
+    --input-bg: #071422;
+    --input-border: #17303f;
+    --muted: #9aa7b8;
+  }
+}
+
+/* Removed unknown @theme rule to keep CSS parsable by PostCSS */
+
+/* Body */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply min-h-screen antialiased bg-[var(--background)] text-[var(--foreground)];
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
+/* Forms: inputs and textareas are defined at top-level to keep Tailwind PostCSS happy */
 form {
-  input,
-  textarea {
-    @apply border border-gray-300 bg-white w-full p-3;
-  }
-  textarea {
-    @apply field-sizing-content min-h-12;
-  }
+  @apply bg-[var(--card-bg)] rounded-[var(--rounded-lg)] shadow-[var(--card-shadow)] p-8 mb-8;
 }
 
+form input,
+form textarea {
+  @apply w-full p-4 mb-4 rounded-lg text-base transition-colors duration-200 outline-none;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(79,140,255,0.08);
+}
+
+form textarea {
+  @apply min-h-[4rem] resize-y;
+}
+
+/* Buttons */
 .button {
-  @apply flex py-2 px-3 rounded transition-all ease-in-out duration-300 cursor-pointer min-h-10;
-  &.button--default {
-    @apply bg-gray-200 border-gray-300 hover:bg-gray-300 hover:border-gray-500;
-  }
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-[var(--rounded-lg)] font-medium text-base transition-transform duration-150 shadow-sm gap-2;
+  background: var(--accent);
+  color: white;
+}
+.button:hover,
+.button:focus {
+  background: var(--accent-strong);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.12);
+}
+.button--default {
+  @apply bg-black text-[var(--foreground)] border border-gray-200;
+}
+.button--default:hover,
+.button--default:focus {
+  @apply bg-gray-50;
 }
 
+/* Loading state */
 [data-loading="true"] {
-  @apply animate-pulse opacity-50;
+  @apply animate-pulse opacity-60;
+}
+
+/* Utility components */
+.card {
+  @apply bg-[var(--card-bg)] rounded-[var(--rounded-lg)] p-8 shadow-[var(--card-shadow)] mb-8;
+}
+
+header, footer {
+  @apply bg-[var(--card-bg)] rounded-[var(--rounded-lg)] p-6 mb-8 shadow-[var(--card-shadow)];
+}
+
+/* Small helpers for text */
+.muted {
+  @apply text-sm text-gray-500;
 }
