@@ -10,40 +10,14 @@
   --accent-strong: #2563eb;
   --input-bg: #f3f4f6;
   --input-border: #e6edf3;
-  --muted: #94a3b8;
 }
 
-/* Dark mode variables: apply when `html` has the `dark` class */
-html.dark {
-  --background: #071025;
-  --foreground: #e6eef8;
-  --card-bg: #0b1220;
-  --card-shadow: 0 6px 30px rgba(2,6,23,0.6);
-  --rounded-lg: 1rem;
-  --accent: #60a5fa;
-  --accent-strong: #3b82f6;
-  --input-bg: #071422;
-  --input-border: #17303f;
-  --muted: #9aa7b8;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
-
-/* Also respect system preference */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #071025;
-    --foreground: #e6eef8;
-    --card-bg: #0b1220;
-    --card-shadow: 0 6px 30px rgba(2,6,23,0.6);
-    --rounded-lg: 1rem;
-    --accent: #60a5fa;
-    --accent-strong: #3b82f6;
-    --input-bg: #071422;
-    --input-border: #17303f;
-    --muted: #9aa7b8;
-  }
-}
-
-/* Removed unknown @theme rule to keep CSS parsable by PostCSS */
 
 /* Body */
 body {
@@ -86,7 +60,7 @@ form textarea {
   box-shadow: 0 8px 24px rgba(37,99,235,0.12);
 }
 .button--default {
-  @apply bg-black text-[var(--foreground)] border border-gray-200;
+  @apply bg-gray-300 text-[var(--foreground)] border border-gray-200;
 }
 .button--default:hover,
 .button--default:focus {
